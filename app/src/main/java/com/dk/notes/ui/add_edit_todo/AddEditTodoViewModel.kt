@@ -10,6 +10,8 @@ import com.dk.notes.data.Todo
 import com.dk.notes.data.TodoRepository
 import com.dk.notes.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -49,6 +51,7 @@ class AddEditTodoViewModel @Inject constructor(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun onEvent(event: AddEditTodoEvent){
         when(event){
             is AddEditTodoEvent.OnDescriptionChange -> {
@@ -65,14 +68,17 @@ class AddEditTodoViewModel @Inject constructor(
                         return@launch
                     }
 
-                    repository.insertTodo(
-                        Todo(
-                            title = title,
-                            description = description,
-                            isDone = todo?.isDone ?: false,
-                            id = todo?.id
+                    GlobalScope.launch {
+                        repository.insertTodo(
+                            Todo(
+                                title = title,
+                                description = description,
+                                isDone = todo?.isDone ?: false,
+                                id = todo?.id
+                            )
                         )
-                    )
+                    }
+
                     sendUiEvent(UiEvent.PopBackStack)
                 }
             }
@@ -87,5 +93,4 @@ class AddEditTodoViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

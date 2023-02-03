@@ -1,6 +1,5 @@
 package com.dk.notes.ui.add_edit_todo
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -12,10 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dk.notes.util.UiEvent
 import com.dk.notes.util.UiEvent.*
-import kotlinx.coroutines.InternalCoroutinesApi
 
-@OptIn(InternalCoroutinesApi::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditTodoScreen(
     onPopBackStack: () -> Unit,
@@ -25,18 +21,18 @@ fun AddEditTodoScreen(
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
-//        viewModel.uiEvent.collect { event ->
-//            when(event) {
-//                is PopBackStack -> onPopBackStack()
-//                is UiEvent.ShowSnackbar -> {
-//                    scaffoldState.snackbarHostState.showSnackbar(
-//                        message = event.message,
-//                        actionLabel = event.action
-//                    )
-//                }
-//                else -> Unit
-//            }
-//        }
+        viewModel.uiEvent.collect { event ->
+            when(event) {
+                is PopBackStack -> onPopBackStack()
+                is UiEvent.ShowSnackBar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message,
+                        actionLabel = event.action
+                    )
+                }
+                else -> Unit
+            }
+        }
     }
 
     Scaffold(
@@ -88,5 +84,3 @@ fun AddEditTodoScreen(
     }
 
 }
-
-

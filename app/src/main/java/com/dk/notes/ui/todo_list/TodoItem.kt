@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dk.notes.data.Todo
 
+
 @Composable
 fun TodoItem(
     todo: Todo,
@@ -31,7 +32,7 @@ fun TodoItem(
             modifier = modifier.weight(1f),
             verticalArrangement = Arrangement.Center
         ) {
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -41,7 +42,7 @@ fun TodoItem(
                     fontWeight = FontWeight.Bold,
                 )
 
-                Spacer(modifier = modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 IconButton(onClick = {
                     onEvent(TodoListEvent.OnDeleteClick(todo))
                 }){
@@ -57,7 +58,7 @@ fun TodoItem(
             }
 
         }
-        
+
         Checkbox(
             checked = todo.isDone,
             onCheckedChange = { isChecked ->

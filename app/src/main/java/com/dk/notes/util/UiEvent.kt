@@ -11,5 +11,4 @@ sealed class UiEvent{
         val message: String,
         val action: String? = null
     ): UiEvent()
-
 }
